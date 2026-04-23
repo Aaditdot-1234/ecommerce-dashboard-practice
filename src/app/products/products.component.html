@@ -1,0 +1,42 @@
+<div class="products-page">
+  <div class="page-header">
+    <h1>Products</h1>
+    <p>Manage your product inventory</p>
+  </div>
+
+  <div class="filters">
+    <!-- BUG-008: Category filter doesn't work due to wrong property comparison -->
+    <select [(ngModel)]="selectedCategory" (change)="filterByCategory()" class="category-filter">
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+    <span class="results-count">{{ filteredProducts.length }} products</span>
+  </div>
+
+  <div class="products-grid">
+    <div class="product-card" *ngFor="let product of filteredProducts">
+      <div class="product-header">
+        <span class="product-category">{{ product.category }}</span>
+        <span class="product-id">{{ product.id }}</span>
+      </div>
+      <h3 class="product-name">{{ product.name }}</h3>
+      <div class="product-price">₹{{ product.price | number }}</div>
+      <div class="product-rating">{{ getRatingStars(product.rating) }} <span>{{ product.rating }}</span></div>
+      <div class="product-stats">
+        <div class="stat">
+          <span class="label">Stock</span>
+          <span class="value" [ngClass]="getStockClass(product.stock)">{{ product.stock }}</span>
+        </div>
+        <div class="stat">
+          <span class="label">Sold</span>
+          <span class="value">{{ product.sold }}</span>
+        </div>
+      </div>
+      <div class="stock-bar">
+        <div class="stock-fill" [ngClass]="getStockClass(product.stock)"
+          [style.width.%]="(product.stock / 100) * 100">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <span class="logo-icon">🛒</span>
+    <span class="logo-text">ShopMetrics</span>
+  </div>
+  <ul class="navbar-links" [class.open]="isMenuOpen">
+    <li><a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a></li>
+    <li><a routerLink="/orders" routerLinkActive="active">📦 Orders</a></li>
+    <li><a routerLink="/products" routerLinkActive="active">🏷️ Products</a></li>
+    <li><a routerLink="/revenue" routerLinkActive="active">💰 Revenue</a></li>
+    <li><a routerLink="/settings" routerLinkActive="active">⚙️ Settings</a></li>
+  </ul>
+  <div class="navbar-user">
+    <span class="user-avatar">AC</span>
+    <span class="user-name">Aadit Chaurasia</span>
+  </div>
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+</nav>

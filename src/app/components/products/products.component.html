@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1>Products</h1>
+  <p>Manage your product inventory</p>
+</div>
+
+<div class="card">
+  <div class="search-bar">
+    <select [(ngModel)]="categoryFilter" (change)="applyFilter()">
+      <option value="">All Categories</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+    <span class="bug-note">⚠️ BUG-006: Category filter broken (case mismatch bug)</span>
+  </div>
+
+  <div *ngIf="loading">Loading products...</div>
+
+  <div class="table-container" *ngIf="!loading">
+    <table>
+      <thead>
+        <tr>
+          <th (click)="sortBy('id')">ID</th>
+          <th (click)="sortBy('name')">Product Name <i class="fas fa-sort"></i></th>
+          <th (click)="sortBy('category')">Category <i class="fas fa-sort"></i></th>
+          <th (click)="sortBy('price')">Price <i class="fas fa-sort"></i></th>
+          <th (click)="sortBy('stock')">Stock <i class="fas fa-sort"></i></th>
+          <th (click)="sortBy('sold')">Units Sold <i class="fas fa-sort"></i></th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let product of filteredProducts">
+          <td><strong>{{ product.id }}</strong></td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.category }}</td>
+          <td><strong>₹{{ product.price.toLocaleString() }}</strong></td>
+          <td><span class="badge" [ngClass]="getStockClass(product.stock)">{{ product.stock === 0 ? 'Out of Stock' : product.stock + ' units' }}</span></td>
+          <td>{{ product.sold }}</td>
+          <td><span class="badge" [ngClass]="getStatusClass(product.status)">{{ product.status }}</span></td>
+        </tr>
+        <tr *ngIf="filteredProducts.length === 0">
+          <td colspan="7" style="text-align:center;color:#718096;padding:40px">No products found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

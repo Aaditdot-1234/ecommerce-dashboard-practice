@@ -1,0 +1,83 @@
+<div class="page-header">
+  <h1>Dashboard</h1>
+  <p>Welcome back! Here's what's happening with your store.</p>
+</div>
+
+<div *ngIf="loading" class="loading">Loading...</div>
+
+<ng-container *ngIf="!loading">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon revenue"><i class="fas fa-rupee-sign"></i></div>
+      <div class="stat-value">{{ formatCurrency(stats.totalRevenue) }}</div>
+      <div class="stat-label">Total Revenue</div>
+      <div class="stat-change up"><i class="fas fa-arrow-up"></i> {{ stats.revenueChange }}% this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon orders"><i class="fas fa-shopping-cart"></i></div>
+      <div class="stat-value">{{ stats.totalOrders }}</div>
+      <div class="stat-label">Total Orders</div>
+      <div class="stat-change up"><i class="fas fa-arrow-up"></i> {{ stats.ordersChange }}% this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon products"><i class="fas fa-box"></i></div>
+      <div class="stat-value">{{ stats.totalProducts }}</div>
+      <div class="stat-label">Products</div>
+      <div class="stat-change down"><i class="fas fa-arrow-down"></i> {{ stats.productsChange }}% this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon customers"><i class="fas fa-users"></i></div>
+      <div class="stat-value">{{ stats.totalCustomers }}</div>
+      <div class="stat-label">Customers</div>
+      <div class="stat-change up"><i class="fas fa-arrow-up"></i> {{ stats.customersChange }}% this month</div>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <div class="card">
+      <div class="card-title">Monthly Revenue — BUG-001: Wrong chart type (radar instead of bar)</div>
+      <div class="chart-container">
+        <!-- BUG-001: chartType is 'radar' instead of 'bar' -->
+        <canvas baseChart
+          [data]="salesChartData"
+          [type]="salesChartType"
+          [options]="salesChartOptions">
+        </canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Order Status — BUG-002: Chart shows empty (no data)</div>
+      <div class="chart-container">
+        <!-- BUG-002: statusChartData.datasets[0].data is empty array -->
+        <canvas baseChart
+          [data]="statusChartData"
+          [type]="doughnutChartType"
+          [options]="doughnutOptions">
+        </canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Recent Orders</div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Order ID</th><th>Customer</th><th>Product</th><th>Amount</th><th>Status</th><th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of recentOrders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer }}</td>
+            <td>{{ order.product }}</td>
+            <td>₹{{ order.amount.toLocaleString() }}</td>
+            <td><span class="badge" [ngClass]="getBadgeClass(order.status)">{{ order.status }}</span></td>
+            <td>{{ order.date }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ng-container>

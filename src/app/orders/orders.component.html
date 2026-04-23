@@ -1,0 +1,57 @@
+<div class="orders-page">
+  <div class="page-header">
+    <h1>Orders</h1>
+    <p>Manage and track all customer orders</p>
+  </div>
+
+  <div class="filters">
+    <!-- BUG-007: Search only filters by customer name, not product or order ID -->
+    <input
+      type="text"
+      placeholder="Search by customer name..."
+      [(ngModel)]="searchTerm"
+      (input)="onSearch()"
+      class="search-input"
+    />
+    <select [(ngModel)]="selectedStatus" (change)="onStatusFilter()" class="status-filter">
+      <option value="">All Statuses</option>
+      <option value="pending">Pending</option>
+      <option value="processing">Processing</option>
+      <option value="shipped">Shipped</option>
+      <option value="delivered">Delivered</option>
+      <option value="cancelled">Cancelled</option>
+    </select>
+    <span class="results-count">{{ filteredOrders.length }} orders</span>
+  </div>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <!-- BUG-006: Sort arrows show but direction never toggles -->
+          <th (click)="sortBy('id')" class="sortable">Order ID <span>↕</span></th>
+          <th (click)="sortBy('customer')" class="sortable">Customer <span>↕</span></th>
+          <th (click)="sortBy('product')" class="sortable">Product <span>↕</span></th>
+          <th (click)="sortBy('amount')" class="sortable">Amount <span>↕</span></th>
+          <th (click)="sortBy('status')" class="sortable">Status <span>↕</span></th>
+          <th (click)="sortBy('date')" class="sortable">Date <span>↕</span></th>
+          <th>Qty</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let order of filteredOrders">
+          <td class="order-id">{{ order.id }}</td>
+          <td>{{ order.customer }}</td>
+          <td>{{ order.product }}</td>
+          <td>₹{{ order.amount | number }}</td>
+          <td><span class="status-badge" [ngClass]="getStatusClass(order.status)">{{ order.status }}</span></td>
+          <td>{{ order.date }}</td>
+          <td>{{ order.quantity }}</td>
+        </tr>
+        <tr *ngIf="filteredOrders.length === 0">
+          <td colspan="7" class="no-results">No orders found</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

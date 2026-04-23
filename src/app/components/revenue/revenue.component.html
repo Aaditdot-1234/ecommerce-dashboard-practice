@@ -1,0 +1,30 @@
+<div class="page-header">
+  <h1>Revenue</h1>
+  <p>Track your store's financial performance</p>
+</div>
+
+<!-- BUG-004: API error shown here -->
+<div *ngIf="error" class="alert alert-error">
+  ⚠️ BUG-004: {{ errorMessage }} (Fix: call getRevenueDataFixed() instead of getRevenueData())
+</div>
+
+<!-- BUG-005: Layout broken - revenue-broken-grid uses 6 columns instead of 3 -->
+<div class="revenue-broken-grid">
+  <div class="stat-card" *ngFor="let stat of revenueStats">
+    <div class="stat-label">{{ stat.label }} <span class="bug-label">⚠️ BUG-005</span></div>
+    <div class="stat-value">{{ stat.value }}</div>
+    <div class="stat-change up" *ngIf="stat.change">{{ stat.change }}</div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-title">Monthly Revenue Chart — BUG-004: Shows empty (API failed)</div>
+  <div *ngIf="loading">Loading chart...</div>
+  <div class="chart-container" *ngIf="!loading && !error">
+    <canvas baseChart [data]="lineChartData" [type]="lineChartType" [options]="lineChartOptions"></canvas>
+  </div>
+  <div *ngIf="error" style="text-align:center;padding:60px;color:#718096">
+    <i class="fas fa-exclamation-triangle" style="font-size:40px;color:#fc8181;margin-bottom:16px;display:block"></i>
+    Chart cannot be displayed — API call failed
+  </div>
+</div>
