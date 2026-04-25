@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit {
     labels: ['Electronics', 'Clothing', 'Footwear', 'Accessories'],
     datasets: [{
       data: [45, 25, 20, 10],
-      backgroundColor: ['#3b82f6', '#10b981'] // BUG-003: Missing colors for Footwear and Accessories
+      backgroundColor: ['#3b82f6', '#10b981', '#8b5cf6', '#f97316'] // BUG-003: Missing colors for Footwear and Accessories
     }]
   };
 
