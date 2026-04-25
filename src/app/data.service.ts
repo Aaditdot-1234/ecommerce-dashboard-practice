@@ -59,7 +59,6 @@ export class DataService {
   }
 
   getRevenueData(): Observable<RevenueData[]> {
-    // BUG-004: API randomly fails - throws error instead of returning data
     return of(this.revenueData);
   }
 
