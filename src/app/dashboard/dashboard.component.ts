@@ -54,10 +54,11 @@ export class DashboardComponent implements OnInit {
     }
   };
 
-  constructor(private dataService: DataService) {}
+  constructor(private dataService: DataService) { }
 
   ngOnInit(): void {
     this.stats = this.dataService.getDashboardStats();
+    console.log(this.stats);
     this.dataService.getOrders().subscribe(orders => {
       // BUG-005: slice(0,5) should show recent 5 but orders aren't sorted by date first
       this.recentOrders = orders.slice(0, 5);

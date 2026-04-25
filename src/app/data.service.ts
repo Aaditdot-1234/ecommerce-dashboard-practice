@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
-import { Order, Product, RevenueData, DashboardStats } from '../shared/models/models';
+import { Order, Product, RevenueData, DashboardStats } from './shared/models/models';
 
 @Injectable({
   providedIn: 'root'
@@ -69,7 +69,7 @@ export class DataService {
   getDashboardStats(): DashboardStats {
     // BUG-001: Wrong calculation - uses hardcoded wrong value instead of computing from data
     return {
-      totalRevenue: 99999, // Should be sum of all revenue
+      totalRevenue: this.orders.reduce((sum, order) => sum + order.amount, 0),
       totalOrders: this.orders.length,
       totalProducts: this.products.length,
       totalCustomers: 89 // Should be unique customers count
