@@ -67,12 +67,11 @@ export class DataService {
   }
 
   getDashboardStats(): DashboardStats {
-    // BUG-001: Wrong calculation - uses hardcoded wrong value instead of computing from data
     return {
       totalRevenue: this.orders.reduce((sum, order) => sum + order.amount, 0),
       totalOrders: this.orders.length,
       totalProducts: this.products.length,
-      totalCustomers: 89 // Should be unique customers count
+      totalCustomers: new Set(this.orders.map(o => o.customer)).size
     };
   }
 

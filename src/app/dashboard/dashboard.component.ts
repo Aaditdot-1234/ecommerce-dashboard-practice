@@ -19,7 +19,7 @@ export class DashboardComponent implements OnInit {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
     datasets: [
       {
-        data: [125000, 148000, 162000, 139000], // BUG-002: Only 4 values for 6 labels
+        data: [125000, 148000, 162000, 139000, 175000, 198000], // BUG-002: Only 4 values for 6 labels
         label: 'Revenue',
         backgroundColor: '#3b82f6',
         borderRadius: 6,
