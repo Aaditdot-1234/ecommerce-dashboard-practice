@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { catchError, Observable, of, throwError } from 'rxjs';
 import { Order, Product, RevenueData, DashboardStats } from './shared/models/models';
 
 @Injectable({
@@ -60,9 +60,6 @@ export class DataService {
 
   getRevenueData(): Observable<RevenueData[]> {
     // BUG-004: API randomly fails - throws error instead of returning data
-    if (Math.random() > 0.5) {
-      return throwError(() => new Error('Network Error: Failed to fetch revenue data'));
-    }
     return of(this.revenueData);
   }
 
